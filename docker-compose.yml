@@ -1,5 +1,7 @@
 version: "3"
-
+x-depends: &depends
+  - "redis"
+  - "db"
 services:
   vote:
     build: ./vote
@@ -9,8 +11,7 @@ services:
     ports:
       - "5000:80"
     depends_on:
-      - "redis"
-      - "db"
+      *depends
 
   result:
     build: ./result
@@ -20,15 +21,13 @@ services:
     ports:
       - "5001:80"
     depends_on:
-      - "redis"
-      - "db"
+      *depends
 
   worker:
     build:
       context: ./worker
     depends_on:
-      - "redis"
-      - "db"
+      *dpends
 
   redis:
     image: redis:alpine
